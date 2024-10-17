@@ -1,13 +1,10 @@
 import { useContext } from "react";
-
 import { Link, useParams } from "react-router-dom";
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import { API_ROUTE } from "../constants";
 import { SelectedRecipes } from "../App";
-
 import { TRecipe } from "../types/Recipe";
-
 import { getIngredientsAndMassure } from "../utils/getFromAPI";
 
 const recipeDetailQuery = (recipeId: string) => ({
@@ -41,7 +38,6 @@ const RecipeDetailPage = () => {
   }
 
   const ingredientsArray = getIngredientsAndMassure(recipe);
-
   const isSelected = selectedRecipes.some(
     (selected) => selected.idMeal === recipe.idMeal
   );
@@ -116,7 +112,7 @@ const RecipeDetailPage = () => {
       {recipe.strSource && (
         <p>
           <strong>Source:</strong>{" "}
-          <Link to={recipe.strSource} className="text-blue-400 ">
+          <Link to={recipe.strSource} className="text-blue-400">
             {recipe.strSource}
           </Link>
         </p>
@@ -126,14 +122,3 @@ const RecipeDetailPage = () => {
 };
 
 export default RecipeDetailPage;
-
-export const loader =
-  (queryClient: QueryClient) =>
-  async ({ params }: { params: { recipeId: string } }) => {
-    const { recipeId } = params;
-    const query = recipeDetailQuery(recipeId);
-    return (
-      queryClient.getQueryData(query.queryKey) ??
-      (await queryClient.fetchQuery(query))
-    );
-  };

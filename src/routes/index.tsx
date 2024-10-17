@@ -23,7 +23,10 @@ export const router = createBrowserRouter([
         element: <Home />,
         loader: recipesLoader(queryClient),
       },
-      { path: "/recipe/:recipeId", element: <RecipeDetailPage /> },
+      {
+        path: "/recipe/:recipeId",
+        element: <RecipeDetailPage />,
+      },
       { path: "/selected", element: <SelectedRecipesPage /> },
     ],
   },
